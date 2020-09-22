@@ -13,20 +13,23 @@ const forecast = (latitude, longitude, callback) => {
     longitude +
     " &units=f";
 
-  request({ url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("unable to access weather service", undefined);
-    } else if (response.body.error) {
+    } else if (body.error) {
       callback("unable to find location", undefined);
     } else {
       callback(
         undefined,
-        response.body.current.weather_descriptions +
+        body.current.weather_descriptions +
           ",  it is currently " +
-          response.body.current.temperature +
-          " degrees out there ," +
-          " there is a " +
-          response.body.current.precip +
+          body.current.temperature +
+          " degrees out there , it feels like  " +
+          body.current.feelslike +
+          " degree out. The humidity is  " +
+          body.current.humidity +
+          ", and there is a  " +
+          body.current.precip +
           "% chance of rain"
       );
     }
