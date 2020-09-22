@@ -9,19 +9,17 @@ weatherForm.addEventListener("submit", (e) => {
 
   message1.textContent = "loading data...";
   message2.textContent = "";
-  fetch("http://localhost:3000/weather?address= " + location).then(
-    (response) => {
-      response.json().then((data) => {
-        if (data.error) {
-          message1.textContent = data.error;
-        } else {
-          message1.textContent = "Location : " + data.location;
+  fetch("/weather?address= " + location).then((response) => {
+    response.json().then((data) => {
+      if (data.error) {
+        message1.textContent = data.error;
+      } else {
+        message1.textContent = "Location : " + data.location;
 
-          message2.textContent = "Forecast :  " + data.forecast;
-        }
-      });
-    }
-  );
+        message2.textContent = "Forecast :  " + data.forecast;
+      }
+    });
+  });
 });
 
 // fetch("http://puzzle.mead.io/puzzle").then((response) => {
